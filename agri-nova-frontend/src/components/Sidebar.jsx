@@ -1,17 +1,23 @@
 import { 
-  User, Leaf, BarChart2, Cloud, MessageSquare, 
-  Calendar, Droplet, Thermometer, Sun, Clock,
-  Settings, LogOut, ChevronDown, ChevronUp, Bell
+  User, Leaf, BarChart2, Cloud, MessageSquare, ShoppingCart,
+  Calendar, Droplet, Thermometer, Sun, Clock, Settings, 
+  LogOut, ChevronDown, ChevronUp, Bell, Package, TrendingUp
 } from 'lucide-react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 const Sidebar = ({ darkMode, setDarkMode }) => {
-  const [expandedMenu, setExpandedMenu] = useState(null);
+  const [expandedMenus, setExpandedMenus] = useState({
+    predictions: false,
+    marketplace: false
+  });
   const navigate = useNavigate();
 
   const toggleMenu = (menu) => {
-    setExpandedMenu(expandedMenu === menu ? null : menu);
+    setExpandedMenus(prev => ({
+      ...prev,
+      [menu]: !prev[menu]
+    }));
   };
 
   const handleLogout = () => {
@@ -29,7 +35,7 @@ const Sidebar = ({ darkMode, setDarkMode }) => {
         <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-2 rounded-lg">
           <Leaf className="w-6 h-6 text-white" />
         </div>
-        <span className="text-xl font-bold">AgriConnect</span>
+        <span className="text-xl font-bold">AgriNova</span>
       </div>
 
       {/* Navigation */}
@@ -46,6 +52,7 @@ const Sidebar = ({ darkMode, setDarkMode }) => {
           <span>Dashboard</span>
         </NavLink>
 
+        {/* Crop Predictions Section */}
         <div>
           <button
             onClick={() => toggleMenu('predictions')}
@@ -57,11 +64,21 @@ const Sidebar = ({ darkMode, setDarkMode }) => {
               <Thermometer className="w-5 h-5" />
               <span>Crop Predictions</span>
             </div>
-            {expandedMenu === 'predictions' ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+            {expandedMenus.predictions ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
           </button>
           
-          {expandedMenu === 'predictions' && (
+          {expandedMenus.predictions && (
             <div className="ml-8 mt-1 space-y-1">
+                            <NavLink 
+                to="/dashboard/crop-predictions"
+                className={({ isActive }) => `block p-2 rounded-lg transition-colors ${
+                  isActive 
+                    ? darkMode ? 'bg-gray-700 text-white' : 'bg-green-50 text-green-700'
+                    : darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+                }`}
+              >
+                Crop Predictions
+              </NavLink>
               <NavLink 
                 to="/dashboard/crop-recommendations"
                 className={({ isActive }) => `block p-2 rounded-lg transition-colors ${
@@ -73,7 +90,7 @@ const Sidebar = ({ darkMode, setDarkMode }) => {
                 Recommendations
               </NavLink>
               <NavLink 
-                to="/dashboard/crop-planning"
+                to="/dashboard/planting-calendar"
                 className={({ isActive }) => `block p-2 rounded-lg transition-colors ${
                   isActive 
                     ? darkMode ? 'bg-gray-700 text-white' : 'bg-green-50 text-green-700'
@@ -86,18 +103,67 @@ const Sidebar = ({ darkMode, setDarkMode }) => {
           )}
         </div>
 
-        <NavLink 
-          to="/dashboard/market-trends"
-          className={({ isActive }) => `w-full flex items-center space-x-3 p-3 rounded-lg transition-colors ${
-            isActive 
-              ? darkMode ? 'bg-gray-700 text-white' : 'bg-green-50 text-green-700'
-              : darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
-          }`}
-        >
-          <Sun className="w-5 h-5" />
-          <span>Market Trends</span>
-        </NavLink>
+        {/* Marketplace Section */}
+        <div>
+          <button
+            onClick={() => toggleMenu('marketplace')}
+            className={`w-full flex items-center justify-between p-3 rounded-lg transition-colors ${
+              darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+            }`}
+          >
+            <div className="flex items-center space-x-3">
+              <ShoppingCart className="w-5 h-5" />
+              <span>Marketplace</span>
+            </div>
+            {expandedMenus.marketplace ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+          </button>
+          
+          {expandedMenus.marketplace && (
+            <div className="ml-8 mt-1 space-y-1">
+              <NavLink 
+                to="/dashboard/marketplace/sell"
+                className={({ isActive }) => `block p-2 rounded-lg transition-colors ${
+                  isActive 
+                    ? darkMode ? 'bg-gray-700 text-white' : 'bg-green-50 text-green-700'
+                    : darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+                }`}
+              >
+                <div className="flex items-center space-x-2">
+                  <Package className="w-4 h-4" />
+                  <span>Sell Produce</span>
+                </div>
+              </NavLink>
+              <NavLink 
+                to="/dashboard/marketplace/buy"
+                className={({ isActive }) => `block p-2 rounded-lg transition-colors ${
+                  isActive 
+                    ? darkMode ? 'bg-gray-700 text-white' : 'bg-green-50 text-green-700'
+                    : darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+                }`}
+              >
+                <div className="flex items-center space-x-2">
+                  <ShoppingCart className="w-4 h-4" />
+                  <span>Buy Products</span>
+                </div>
+              </NavLink>
+              <NavLink 
+                to="/dashboard/market-trends"
+                className={({ isActive }) => `block p-2 rounded-lg transition-colors ${
+                  isActive 
+                    ? darkMode ? 'bg-gray-700 text-white' : 'bg-green-50 text-green-700'
+                    : darkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+                }`}
+              >
+                <div className="flex items-center space-x-2">
+                  <TrendingUp className="w-4 h-4" />
+                  <span>Market Trends</span>
+                </div>
+              </NavLink>
+            </div>
+          )}
+        </div>
 
+        {/* Other Navigation Links */}
         <NavLink 
           to="/dashboard/weather"
           className={({ isActive }) => `w-full flex items-center space-x-3 p-3 rounded-lg transition-colors ${

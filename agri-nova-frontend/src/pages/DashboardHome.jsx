@@ -1,13 +1,13 @@
 import { 
   ChevronDown, ChevronUp, Thermometer, Sun, Cloud, 
-  Droplet, BarChart2, Clock, CloudRain
+  Droplet, BarChart2, Clock, CloudRain, Leaf
 } from 'lucide-react';
 import { useState } from 'react';
 
 const DashboardHome = ({ darkMode }) => {
   const [expandedCard, setExpandedCard] = useState(null);
 
-  // Dummy farmer profile data
+  // Farmer profile data
   const farmerProfile = {
     name: "Rajesh Kumar",
     location: "Punjab, India",
@@ -17,22 +17,22 @@ const DashboardHome = ({ darkMode }) => {
     joinedDate: "15 Jan 2020"
   };
 
-  // Dummy crop prediction data
+  // Crop prediction data
   const cropPredictions = [
     { crop: "Wheat", probability: 78, suitable: true },
     { crop: "Rice", probability: 65, suitable: true },
-    { crop: "Cotton", probability: 42, suitable: false },
+    { crop: "Potato", probability: 72, suitable: true },
     { crop: "Mustard", probability: 71, suitable: true }
   ];
 
-  // Dummy market predictions
+  // Market predictions
   const marketPredictions = [
     { crop: "Wheat", currentPrice: "₹2,150/quintal", predictedPrice: "₹2,320 (+8%)", timeFrame: "Next 2 weeks" },
     { crop: "Rice", currentPrice: "₹1,890/quintal", predictedPrice: "₹1,950 (+3%)", timeFrame: "Next week" },
     { crop: "Mustard", currentPrice: "₹5,400/quintal", predictedPrice: "₹5,600 (+4%)", timeFrame: "Next 10 days" }
   ];
 
-  // Dummy weather data
+  // Weather data
   const weatherData = {
     current: {
       temp: "28°C",
@@ -47,16 +47,17 @@ const DashboardHome = ({ darkMode }) => {
     ]
   };
 
-  // Dummy soil health data
+  // Soil health data
   const soilHealth = {
     moisture: "Optimal",
     nitrogen: "Medium",
     phosphorus: "High",
     potassium: "Low",
-    ph: "6.8 (Neutral)"
+    ph: "6.8 (Neutral)",
+    lastUpdated: "2 days ago"
   };
 
-  // Dummy irrigation suggestions
+  // Irrigation suggestions
   const irrigationSuggestions = [
     { field: "Field A (Wheat)", suggestion: "Irrigate tomorrow morning" },
     { field: "Field B (Rice)", suggestion: "Delay irrigation - sufficient moisture" }
@@ -349,7 +350,7 @@ const DashboardHome = ({ darkMode }) => {
         ) : (
           <div className="flex justify-between items-center">
             <p className={`${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-              Last updated: 2 days ago
+              Last updated: {soilHealth.lastUpdated}
             </p>
             <div className="flex items-center">
               <span className="font-medium mr-1">{soilHealth.moisture}</span>

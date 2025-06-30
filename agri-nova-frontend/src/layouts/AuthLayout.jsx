@@ -10,7 +10,7 @@ const AuthLayout = () => {
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2">
             <Leaf className="h-6 w-6 text-green-600" />
-            <span className="text-xl font-bold">AgriConnect</span>
+            <span className="text-xl font-bold">AgriNova</span>
           </Link>
           <div className="flex space-x-4">
             <Link 

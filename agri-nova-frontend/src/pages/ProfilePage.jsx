@@ -157,9 +157,20 @@ const ProfilePage = ({ darkMode }) => {
       
       <div className={`rounded-xl p-6 ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <h2 className="text-2xl font-bold mb-4">Account Settings</h2>
-        {/* Add account settings options here */}
+        <div className="space-y-4">
+          <div>
+            <h3 className="font-bold mb-2">Change Password</h3>
+            {/* Password change form */}
+          </div>
+          <div>
+            <h3 className="font-bold mb-2">Notification Preferences</h3>
+            {/* Notification settings */}
+          </div>
+        </div>
       </div>
+      
     </div>
+    
   );
 };
 
